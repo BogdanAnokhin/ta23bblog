@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
@@ -9,6 +10,7 @@ Route::get('/', [PublicController::class, 'index'])->name('home');
 Route::get('/post/{post}', [PublicController::class, 'post'])->name('post');
 Route::get('/user/{user}', [PublicController::class, 'user'])->name('user');
 Route::get('/category/{category}', [PublicController::class, 'category'])->name('category');
+Route::get('/tag/{tag}', [PublicController::class, 'tag'])->name('tag');
 
 // Route::get('/admin/posts', [PostController::class, 'index'])->name('posts.index');
 // Route::get('/admin/posts/create', [PostController::class, 'create'])->name('posts.create');
@@ -31,6 +33,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/post/{post}/like', [PublicController::class, 'like'])->name('post.like');
     Route::get('/user/{user}/follow', [PublicController::class, 'follow'])->name('follow');
+
+    Route::post('/post/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
     Route::get('/secure', [PublicController::class, 'secure'])->middleware('password.confirm')->name('secure');
 
